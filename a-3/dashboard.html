@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Cards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fafafa;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1.page-title {
+            text-align: center;
+            font-size: 32px;
+            color: #333;
+            margin: 20px 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+            justify-content: center;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 250px;
+            padding: 10px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+            background: white;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .card h3 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+            text-align: center;
+            color: #444;
+        }
+        .card p {
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+        }
+        .ingredients-title {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: left;
+            color: #222;
+        }
+        .ingredients {
+            text-align: left;
+            font-size: 13px;
+            margin-top: 5px;
+            padding-left: 18px;
+        }
+        .ingredients li {
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">Our Delicious Recipes</h1>
+    <div id="container"></div>
+
+    <script>
+        async function fetchRecipes() {
+            try {
+                let response = await fetch("https://dummyjson.com/recipes");
+                let result = await response.json();
+                let container = document.getElementById("container");
+
+                result.recipes.forEach((element) => {
+                    let card = document.createElement("div");
+                    card.className = "card";
+
+                    let img = document.createElement("img");
+                    img.src = element.image;
+                    img.alt = element.name;
+
+                    let title = document.createElement("h3");
+                    title.textContent = element.name;
+
+                    let desc = document.createElement("p");
+                    desc.textContent = `Cuisine: ${element.cuisine} | Prep Time: ${element.prepTimeMinutes} mins`;
+
+                    let ingTitle = document.createElement("div");
+                    ingTitle.className = "ingredients-title";
+                    ingTitle.textContent = "Ingredients:";
+
+                    let ingList = document.createElement("ul");
+                    ingList.className = "ingredients";
+                    element.ingredients.forEach((ing) => {
+                        let li = document.createElement("li");
+                        li.textContent = ing;
+                        ingList.append(li);
+                    });
+
+                    card.append(img, title, desc, ingTitle, ingList);
+                    container.append(card);
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchRecipes();
+    </script>
+</body>
+</html>

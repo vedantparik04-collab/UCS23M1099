@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="mydiv">
+
+    </div>
+    
+
+    <script>
+   
+      let x=fetch("https://jsonplaceholder.typicode.com/posts");
+      x.then((response)=>{
+        //console.log(response);
+        let j=response.json();
+        //console.log(j);
+        j.then((result)=>{
+            let table=document.createElement("table");
+            table.border="1";
+            //console.log(result);
+            let key=Object.keys(result[0]);
+            
+            //console.log(key);
+            let thead=document.createElement("tr");
+            key.forEach((h)=>{
+                let c=document.createElement("th");
+                c.textContent=h;
+                thead.append(c);
+            })
+            table.append(thead);
+            
+            result.forEach((r)=>{
+                //console.log(r);
+                let trow=document.createElement("tr");
+                key.forEach((d)=>{
+                    //console.log(d);
+                    let c=document.createElement("td");
+                    c.textContent=r[d];
+                    trow.append(c);
+                })
+                table.append(trow);
+            })
+            
+            document.getElementById("mydiv").append(table);
+        })
+       
+      })
+      
+        
+
+    </script>
+</body>
+</html>
