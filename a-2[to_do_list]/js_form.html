@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <label>Enter name:</label>
+  <input type="text" id="name"><br><br>
+
+  <label>Enter email:</label>
+  <input type="email" id="email"><br><br>
+
+  <label>Enter password:</label>
+  <input type="password" id="password"><br><br>
+
+  <label>Enter date:</label>
+  <input type="date" id="dob"><br><br>
+
+  <button id="submit-btn">Submit</button>
+
+
+  <!-- <div id="update-div" style="display: none; border: 1px solid black; padding: 10px;">
+  <h3>Edit Details</h3>
+  <label>Enter name:</label>
+  <input type="text" id="upadte-name"><br><br>
+
+  <label>Enter email:</label>
+  <input type="email" id="update-email"><br><br>
+
+  <label>Enter password:</label>
+  <input type="password" id="update-password"><br><br>
+
+  <label>Enter date:</label>
+  <input type="date" id="update-dob"><br><br>
+
+  <button id="update-submit-btn">Submit</button>
+  <button onclick="document.getElementById('update-div').style.display='none'">Cancel</button>
+
+</div> -->
+
+
+  <table border="1">
+    <tr>
+    <th>name</th>
+    <th>email</th>
+    <th>password</th>
+    <th>date</th>
+    </tr>
+    <tbody id="table-body">
+    </tbody>
+  </table>
+
+  <script>
+    let data=document.getElementById("submit-btn").addEventListener("click",function()
+{
+    let new_name=document.getElementById("name").value;
+    let new_email=document.getElementById("email").value;
+    let new_password=document.getElementById("password").value;
+    let new_date=document.getElementById("dob").value;
+
+    let new_table_body=document.getElementById("table-body");
+
+    let action=document.createElement("td");
+
+    let deleteBtn=document.createElement("button");
+    deleteBtn.textContent="delete";
+    deleteBtn.onclick=function()
+    {
+      new_row.remove();
+    };
+
+    // let updateBtn=document.createElement("button");
+    // updateBtn.textContent="update";
+    // updateBtn.onclick=function()
+    // {
+    //   document.getElementById("update-div").style.display="block";
+    // }
+
+
+
+    let new_row=document.createElement("tr");
+    new_row.innerHTML=`<td>${new_name}</td><td>${new_email}</td><td>${new_password}</td><td>${new_date}</td>`;
+    new_table_body.appendChild(new_row);
+    
+    
+    action.appendChild(deleteBtn);
+    //action.appendChild(updateBtn);
+    new_row.appendChild(action);
+
+})
+  </script>
+</body>
+</html>

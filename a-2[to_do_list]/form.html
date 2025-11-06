@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #name
+        {
+            border: 2 px solid black; 
+        }
+        #mydiv
+        {
+            background-color:whitesmoke;
+            padding: 5px;
+            width: 400px;
+            text-align: center;
+        }
+        body
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="mydiv">
+        Enter Task:<input type="text" id="name">
+        <button id="submit" type="button">Submit</button>
+    </div>
+
+    <table border="1">
+        <tr>
+            <th>Task</th>
+            <th>Action</th>
+        </tr>
+            <tbody id="table-body">
+
+            </tbody>
+    </table>
+
+    <script>
+        //let table=document.createElement("table");
+        //table.border='1';
+        let table=document.getElementById("table-body");
+        document.getElementById("submit").addEventListener("click",()=>{
+            let name=document.getElementById("name").value;
+            let row=document.createElement("tr");
+            let cell1=document.createElement("td");
+            cell1.textContent=name;
+            let cell2=document.createElement("td");
+            let delbtn=document.createElement("button");
+            delbtn.textContent="Delete";
+            cell2.append(delbtn);
+            delbtn.addEventListener("click",()=>{
+                row.remove();
+            })
+
+            let edbtn=document.createElement("button");
+            edbtn.textContent="Edit";
+            edbtn.addEventListener("click",()=>{
+                let new_name=prompt("edit ur task:",cell1.textContent);
+                if(new_name!==null)
+            {
+                cell1.textContent=new_name;
+            }
+            })
+            let cell3=document.createElement("td");
+            cell3.append(edbtn);
+
+            row.append(cell1);
+            row.append(cell2,cell3);
+            table.append(row);
+        })
+    </script>
+</body>
+</html>
