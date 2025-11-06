@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Form</title>
+    <style>
+        table 
+        {
+            border-collapse: collapse;
+            margin: 20px;
+        }
+        th,td
+        {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        button 
+        {
+            margin: 5px;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Book Name</td>
+            <td><input type="text" id="book_name" placeholder="Enter book name"></td>
+        </tr>
+        <tr>
+            <td>Book Id</td>
+            <td><input type="text" id="book_id" placeholder="Enter book id"></td>
+        </tr>
+        <tr>
+            <td>Enter Date</td>
+            <td><input type="date" id="date"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button id="insert">INSERT</button>
+                <button id="deleted">DELETE</button>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        async function insertdata() 
+        {
+            let book_name=document.getElementById("book_name").value;
+            let book_id=document.getElementById("book_id").value;
+            let date=document.getElementById("date").value;
+
+            let formdata=new FormData();
+            formdata.append("book_name", book_name);
+            formdata.append("book_id", book_id);
+            formdata.append("date", date);
+
+            let response=await fetch("http://localhost/exam/addtdata.php", {
+                method:'POST',
+                body:formdata
+            });
+
+            let text=await response.text();
+            alert(text);
+            console.log(text);
+        }
+        async function deletedata()
+        {
+            let book_id=prompt("enter book id to delete");
+            let formdata=new FormData();
+            formdata.append("book_id",book_id);
+            let response=await fetch("http://localhost/exam/deletedata.php", {
+                method:'POST',
+                body:formdata
+            });
+
+            let text=await response.text();
+            alert(text);
+            console.log(text);
+        }
+
+        document.getElementById("insert").addEventListener("click", insertdata);
+        document.getElementById("deleted").addEventListener("click", deletedata);
+    </script>
+</body>
+</html>
+

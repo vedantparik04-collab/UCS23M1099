@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Document</title>
+     <style>
+        table
+        {
+            border-collapse: collapse;
+            margin: 10px auto;
+        }
+        body
+        {
+            text-align: center;
+        }
+        th,td
+        {
+            border: 2px solid black;
+            padding: 10px 10px;
+            text-align: center;
+        }
+        button
+        {
+            margin: 5px;
+        }
+
+    </style>
+</head>
+<body>
+   <table>
+        <tr>
+           <td colspan="2"><h1>Inventory Managment system</h1></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" id="name"></td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <td><input type="text" id="qty"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button id="insert">insert</button><button id="display">display</button></td>
+        </tr>
+    </table>
+
+    <div id="mytable"></div>
+    <script>
+        async function addproduct()
+        {
+            let name=document.getElementById("name").value;
+            let qty=document.getElementById("qty").value;
+            let formdata=new FormData();
+            formdata.append("name",name);
+            formdata.append("qty",qty);
+            let response=await fetch("http://localhost/exam/addproduct.php",{
+                method:'POST',
+                body:formdata
+            });
+            let text=await response.text();
+        }
+        async function displayproduct()
+        {
+            let response=await fetch("http://localhost/exam/displayproduct.php");
+            let data=await response.json();
+            let container = document.getElementById("mytable");
+            container.innerHTML = "";
+            let table = document.createElement("table");
+            let header=document.createElement("tr");
+            let keys=Object.keys(data[0]);
+            keys.forEach((key)=>{
+                let th=document.createElement("th");
+                th.textContent=key;
+                header.append(th);
+            })
+            table.append(header);
+
+            data.forEach((row)=>{
+                let tr=document.createElement("tr");
+                for(let item in row)
+                    {
+                        let td=document.createElement("td");
+                        td.textContent=row[item];
+                        tr.append(td);
+                    }
+                    table.append(tr);
+            })
+              
+            document.getElementById("mytable").append(table);
+        }
+        
+        document.getElementById("insert").addEventListener("click",addproduct);
+        document.getElementById("display").addEventListener("click",displayproduct);
+    </script>
+</body>
+</html>
